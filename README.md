@@ -1,51 +1,20 @@
-# 🌐 Digital Architect Portfolio
-### **Malvin Kristanto Alim** | XII-D / 16
-**SMAK Frateran Surabaya** | Kelompok **ANOMANI**
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
----
+# Run and deploy your AI Studio app
 
-## 🚀 Overview
-Website portfolio interaktif ini dirancang untuk menampilkan identitas profesional dan proyek optimasi sistem. Dibangun dengan fokus pada estetika **Dark Mode** dan efisiensi pengolahan data menggunakan **SQLite**.
+This contains everything you need to run your app locally.
 
-> **"Turning complex mathematical logic into seamless digital experiences."**
+View your app in AI Studio: https://ai.studio/apps/acb32d04-05cd-4981-8e64-26ac24824971
 
----
+## Run Locally
 
-## 🛠️ Tech Stack & Features
-Project ini menerapkan standar *Clean Code* dengan teknologi berikut:
+**Prerequisites:**  Node.js
 
-* **Frontend:** HTML5 & Tailwind CSS (Custom Theme: `surface-container`)
-* **Backend:** PHP PDO (PHP Data Objects)
-    * *Logic:* Pemisahan data dinamis dari database ke interface.
-* **Database:** SQLite 3
-    * *Storage:* File-based database untuk performa ringan dan portabel.
-* **Typography:** Space Grotesk & Inter (via Google Fonts)
 
----
-
-## 📂 Project Highlights: NIKI ECHO
-Salah satu bagian utama dari portfolio ini adalah **Optimasi Produksi NIKI ECHO**:
-* **Problem:** Meminimalkan sisa produksi minuman cup dan botol.
-* **Solution:** Implementasi Sistem Persamaan Linear Dua Variabel (SPLDV) ke dalam model digital.
-* **Outcome:** Data produksi yang presisi dan efisien.
-
----
-
-## 🗄️ Database Structure
-Tabel yang diimplementasikan dalam `database.sqlite`:
-1.  `profile`: Data identitas dan branding utama.
-2.  `skills`: Daftar keahlian teknis dan metodologi.
-3.  `projects`: Showcase pengalaman dan hasil riset (NIKI ECHO & ANOMANI).
-
----
-
-## 📝 Academic Integrity
-Proyek ini mematuhi pedoman akademik sekolah:
-* **AI Utilization:** 40% (Struktur awal & Refinement UI).
-* **Handwritten/Manual Code:** 60% (Logika PHP, Query SQL, & Integrasi Data).
-
----
-
-<p align="center">
-  Released in 2026 • Engineered with Logic by <b>Malvin K. Alim</b>
-</p>
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
