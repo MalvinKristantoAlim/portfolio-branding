@@ -1,13 +1,10 @@
 # Tugas Personal Branding & Portfolio
 **Nama:** Malvin Kristanto Alim  
-**Kelas:** XII SMAK Frateran Surabaya  
+**Kelas:** XII-D / 16  
 **Kelompok:** ANOMANI  
 
-## Deskripsi Proyek
-Website portfolio ini dibuat sebagai tugas akhir materi web development. Website ini menampilkan data diri, keahlian, dan proyek optimasi produksi (NIKI ECHO) yang diambil secara dinamis dari database **SQLite**.
-
-## Tech Stack
-* **Frontend:** HTML5 & Tailwind CSS (Modern Dark Mode)
-* **Backend:** PHP PDO
-* **Database:** SQLite 3
-* **Tools:** Google AI Studio, Stitch, GitHub
+### Fitur Website:
+- **Halaman 1:** Hero section & About Me.
+- **Halaman 2:** Skills & Project Showcase (Studi Kasus: NIKI ECHO).
+- **Database:** Menggunakan SQLite 3 dengan koneksi PHP PDO.
+- **Styling:** Tailwind CSS (Modern Dark Mode).
