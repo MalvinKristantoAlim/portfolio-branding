@@ -41,8 +41,8 @@ Tabel yang diimplementasikan dalam `database.sqlite`:
 
 ## 📝 Academic Integrity
 Proyek ini mematuhi pedoman akademik sekolah:
-* **AI Utilization:** 40% (Struktur awal & Refinement UI).
-* **Handwritten/Manual Code:** 60% (Logika PHP, Query SQL, & Integrasi Data).
+* **AI Utilization:** 30% (Struktur awal & Refinement UI).
+* **Handwritten/Manual Code:** 70% (Logika PHP, Query SQL, & Integrasi Data).
 
 ---
 
