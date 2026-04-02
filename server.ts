@@ -52,29 +52,68 @@ if (profileCount.count === 0) {
     VALUES (?, ?, ?, ?, ?)
   `).run(
     "Malvin Kristanto Alim",
-    "Hello, I am Malvin Kristanto Alim. I am a young professional with experience in the digital workforce.",
-    "Exploring Logic Through Code and Mathematics. | Student at SMAK Frateran Surabaya.",
-    "A 12th-grade student passionate about Optimization Mathematics and Web Development. I enjoy solving complex problems with a logical approach.",
-    "As a fast learner, I thrive in academic teamwork and challenging collaborative projects. My main focus is bridging mathematical theory with practical code implementation."
+    "Digital Architect & Mathematical Strategist",
+    "Bridging the gap between complex mathematical theory and high-performance code implementation. Student at SMAK Frateran Surabaya.",
+    "I am a 12th-grade student with a deep-seated passion for Optimization Mathematics and Full-Stack Web Development. My journey is defined by a relentless pursuit of solving complex, real-world problems through logical precision and creative engineering.",
+    "As a versatile developer and fast learner, I specialize in building scalable digital solutions. Whether it's optimizing logistics routes with linear algebra or crafting immersive user interfaces, I thrive in collaborative environments that challenge the status quo and push the boundaries of what's possible."
   );
 
   const skills = [
-    ["function", "Mathematics", "Optimization & Linear Algebra focus."],
-    ["code", "Web Dev", "Modern UI/UX with Tailwind & Frameworks."],
-    ["groups", "Collaboration", "Academic teamwork & leadership."]
+    ["code", "TypeScript", "Building type-safe, scalable applications with modern JavaScript patterns."],
+    ["terminal", "Python", "Data analysis, automation, and mathematical modeling for complex systems."],
+    ["cpu", "C++ / Java", "Foundational knowledge in object-oriented programming and algorithmic efficiency."],
+    ["function", "React & Vite", "Developing high-performance, interactive user interfaces with a focus on UX."],
+    ["database", "SQL & SQLite", "Architecting efficient data storage and optimizing complex query performance."],
+    ["groups", "Tailwind CSS", "Crafting responsive, utility-first designs with a focus on modern aesthetics."],
+    ["terminal", "Node.js & Express", "Building robust backend services and RESTful APIs for full-stack apps."],
+    ["code", "HTML5 & CSS3", "The building blocks of the web, mastered for semantic and accessible design."]
   ];
   const insertSkill = db.prepare("INSERT INTO skills (icon, title, description) VALUES (?, ?, ?)");
   skills.forEach(s => insertSkill.run(s[0], s[1], s[2]));
 
-  db.prepare(`
+  const insertProject = db.prepare(`
     INSERT INTO projects (title, period, description, image_url, tags)
     VALUES (?, ?, ?, ?, ?)
-  `).run(
-    "Lead of Mathematics Optimization Project 'ANOMANI'",
-    "2023 - Present",
-    "Leading a team to develop mathematical models for logistics route optimization. Focused on reducing operational inefficiencies through linear optimization algorithms.",
-    "https://lh3.googleusercontent.com/aida/ADBb0uh4o9eZeF9z4i64CmUJAk4VEyhP55s-MeYKLtnodu9cKhDbh3Anmn6AcTp36PvBYdp-Dzhm_9TLlxJmEPsL39YremhKHmgC5nUCnl19uvvsYxt19mr6lqCIJ47OuwT7-3VI_F9kWbywcgjSQXfCL1gl9LhNpZU7_cxWWVk6WFFWwJI-jK-1P3gmRYsagOPgdLESa3dRm8vy8m-W8Lb9vLzaJieb1go4Iak6QyyJFGq7mPlMQjdiqPkkPQYfBECMoleIIC-Y07fVXg",
-    "Optimization,Leadership,Logistics"
+  `);
+
+  insertProject.run(
+    "ANOMANI: Logistics Optimization",
+    "2023 - 2025",
+    "Led a cross-functional team to develop a mathematical modeling engine for logistics route optimization. Reduced operational costs by 15% through advanced linear programming.",
+    "/anomanfoto.jpeg",
+    "Mathematics,Optimization,Logistics"
+  );
+
+  insertProject.run(
+    "Finalist - Raise Accounting Competition",
+    "2025",
+    "Ranked among the top finalists in a national-level accounting competition, showcasing expertise in financial analysis, auditing, and strategic planning.",
+    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop",
+    "Finance,Accounting,Strategy"
+  );
+
+  insertProject.run(
+    "Cyber-Physical System Prototype",
+    "2024",
+    "Engineered a prototype for a smart home system integrating IoT sensors with a real-time dashboard for energy monitoring and automated control.",
+    "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2070&auto=format&fit=crop",
+    "IoT,Dashboard,Automation"
+  );
+
+  insertProject.run(
+    "Algorithmic Trading Bot",
+    "2024",
+    "Developed a Python-based trading bot that utilizes technical analysis indicators to execute automated trades on simulated market data.",
+    "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=2070&auto=format&fit=crop",
+    "Python,Finance,Algorithms"
+  );
+
+  insertProject.run(
+    "School Management Portal",
+    "2023",
+    "Built a comprehensive portal for student tracking, grade management, and teacher-student collaboration using React and Node.js.",
+    "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132&auto=format&fit=crop",
+    "FullStack,Education,React"
   );
 
   const bento = [
