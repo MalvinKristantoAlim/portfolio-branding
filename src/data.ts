@@ -24,9 +24,9 @@ export const projectsData: Project[] = [
   {
     id: 1,
     title: "ANOMANI: Logistics Optimization",
-    period: "2023 - 2025",
+    period: "2025",
     description: "Led a cross-functional team to develop a mathematical modeling engine for logistics route optimization. Reduced operational costs by 15% through advanced linear programming.",
-    image_url: "/anomanfoto.jpeg",
+    image_url: "/public/anomanfoto.jpeg",
     tags: ["Mathematics", "Optimization", "Logistics"]
   },
   {
