@@ -26,7 +26,7 @@ export const projectsData: Project[] = [
     title: "ANOMANI: Logistics Optimization",
     period: "2025",
     description: "Led a cross-functional team to develop a mathematical modeling engine for logistics route optimization. Reduced operational costs by 15% through advanced linear programming.",
-    image_url: "/public/anomanfoto.jpeg",
+    image_url: "C:\Users\malvi\Downloads\malvin-kristanto-alim-portfolio (2).zip\public",
     tags: ["Mathematics", "Optimization", "Logistics"]
   },
   {
