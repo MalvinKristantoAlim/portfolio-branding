@@ -19,7 +19,7 @@ export interface Project {
   title: string;
   period: string;
   description: string;
-  image_url: string;
+  image_url?: string;
   tags: string[];
 }
 
