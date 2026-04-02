@@ -40,6 +40,16 @@ export default function App() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  // Sound effect for mechanical keyboard "thock"
+  const playHoverSound = () => {
+    const audio = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_78390a3221.mp3");
+    audio.volume = 0.2;
+    audio.currentTime = 0;
+    audio.play().catch(() => {
+      // Ignore autoplay restrictions
+    });
+  };
+
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -123,18 +133,21 @@ export default function App() {
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-6 py-2 flex items-center gap-8 shadow-2xl">
           <button 
             onClick={() => setActiveView('home')}
+            onMouseEnter={playHoverSound}
             className={`text-sm font-medium transition-colors ${activeView === 'home' ? 'text-primary-cyan' : 'text-white/50 hover:text-white'}`}
           >
             Home
           </button>
           <button 
             onClick={() => setActiveView('works')}
+            onMouseEnter={playHoverSound}
             className={`text-sm font-medium transition-colors ${activeView === 'works' ? 'text-primary-cyan' : 'text-white/50 hover:text-white'}`}
           >
             Works
           </button>
           <button 
             onClick={() => setActiveView('about')}
+            onMouseEnter={playHoverSound}
             className={`text-sm font-medium transition-colors ${activeView === 'about' ? 'text-primary-cyan' : 'text-white/50 hover:text-white'}`}
           >
             About
@@ -142,6 +155,7 @@ export default function App() {
           <div className="w-px h-4 bg-white/10"></div>
           <button 
             onClick={() => setActiveView('contact')}
+            onMouseEnter={playHoverSound}
             className={`text-sm font-medium transition-colors ${activeView === 'contact' ? 'text-primary-cyan' : 'text-white/50 hover:text-white'}`}
           >
             Contact
@@ -163,7 +177,10 @@ export default function App() {
               {/* Hero & Bento Grid */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {/* Intro Card */}
-                <div className="md:col-span-3 bento-card p-10 md:p-14 flex flex-col justify-center space-y-6">
+                <div 
+                  onMouseEnter={playHoverSound}
+                  className="md:col-span-3 bento-card p-10 md:p-14 flex flex-col justify-center space-y-6"
+                >
                   <div className="status-badge w-fit">
                     <span className="w-1.5 h-1.5 bg-primary-cyan rounded-full animate-pulse"></span>
                     Available for projects
@@ -179,7 +196,10 @@ export default function App() {
                 </div>
 
                 {/* Profile Card */}
-                <div className="bento-card group">
+                <div 
+                  onMouseEnter={playHoverSound}
+                  className="bento-card group"
+                >
                   <img 
                     src="https://lh3.googleusercontent.com/aida/ADBb0uiMggPnN9uuSmRMw__1uov0mQp9SJKx76Y_L3vSH3v6ce4r9XTd-SvmhrvcWs_uuZ4IFcaQnRXLJ98DfAa700LFvaCpS5uOB3CofrZU5JHUC6MeYMbHwKZ1zP6_rd0Sp-fR3qXDsdzH73mAZHC7USyL5yYr8EoVB1RGvvp6AxeF8U-YsSV2sKH_u4iuBVX5TSNU1AtFGj6QMMmSBzbuCtWY4oYxb6gvfCICghtrpd_6n_-21YJYvw8DvgYA-SApnWm2C37UVwtxCY4" 
                     alt="Profile"
@@ -191,6 +211,7 @@ export default function App() {
                 {/* About Card */}
                 <div 
                   onClick={() => setActiveView('about')}
+                  onMouseEnter={playHoverSound}
                   className="md:col-span-2 bento-card p-8 flex flex-col justify-between group cursor-pointer hover:bg-white/5 transition-all"
                 >
                   <div className="space-y-4">
@@ -207,6 +228,7 @@ export default function App() {
                 {/* Location Card */}
                 <div 
                   onClick={() => setActiveView('contact')}
+                  onMouseEnter={playHoverSound}
                   className="bento-card p-8 flex flex-col justify-between bg-gradient-to-br from-primary-cyan/10 to-transparent cursor-pointer hover:from-primary-cyan/20 transition-all group"
                 >
                   <div className="flex justify-between items-start">
@@ -230,13 +252,20 @@ export default function App() {
                 </div>
 
                 {/* Tech Stack Card */}
-                <div className="bento-card p-8 flex flex-col justify-between">
+                <div 
+                  onMouseEnter={playHoverSound}
+                  className="bento-card p-8 flex flex-col justify-between"
+                >
                   <h3 className="text-white/40 text-sm font-bold uppercase tracking-widest">Tech Stack</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {skills.slice(0, 6).map((skill) => {
                       const Icon = IconMap[skill.icon] || Code2;
                       return (
-                        <div key={skill.id} className="w-full aspect-square rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors group">
+                        <div 
+                          key={skill.id} 
+                          onMouseEnter={(e) => { e.stopPropagation(); playHoverSound(); }}
+                          className="w-full aspect-square rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors group"
+                        >
                           <Icon size={20} className="text-white/40 group-hover:text-primary-cyan transition-colors" />
                         </div>
                       );
@@ -248,6 +277,7 @@ export default function App() {
                 {projects[0] && (
                   <div 
                     onClick={() => setActiveView('works')}
+                    onMouseEnter={playHoverSound}
                     className="md:col-span-2 md:row-span-2 bento-card group cursor-pointer overflow-hidden"
                   >
                     <img 
@@ -269,7 +299,10 @@ export default function App() {
                 )}
 
                 {/* Capabilities Card */}
-                <div className="md:col-span-2 bento-card p-8 flex flex-col justify-between">
+                <div 
+                  onMouseEnter={playHoverSound}
+                  className="md:col-span-2 bento-card p-8 flex flex-col justify-between"
+                >
                   <div className="space-y-4">
                     <h3 className="text-white/40 text-sm font-bold uppercase tracking-widest">Capabilities</h3>
                     <div className="flex flex-wrap gap-2">
@@ -295,6 +328,7 @@ export default function App() {
                 {/* Social Connect Card */}
                 <div 
                   onClick={() => setActiveView('contact')}
+                  onMouseEnter={playHoverSound}
                   className="md:col-span-2 bento-card p-8 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-all"
                 >
                   <div className="space-y-1">
@@ -302,16 +336,37 @@ export default function App() {
                     <p className="text-sm text-white/40">Find me on social media</p>
                   </div>
                   <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
-                    <a href="https://github.com/MalvinKristantoAlim" target="_blank" className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon">
+                    <a 
+                      href="https://github.com/MalvinKristantoAlim" 
+                      target="_blank" 
+                      onMouseEnter={playHoverSound}
+                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
+                    >
                       <Github size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
                     </a>
-                    <a href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon">
+                    <a 
+                      href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onMouseEnter={playHoverSound}
+                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
+                    >
                       <Linkedin size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
                     </a>
-                    <a href="https://www.instagram.com/heymalvin_/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon">
+                    <a 
+                      href="https://www.instagram.com/heymalvin_/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onMouseEnter={playHoverSound}
+                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
+                    >
                       <Instagram size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
                     </a>
-                    <a href="mailto:malvinkristantoalim1@gmail.com" className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon">
+                    <a 
+                      href="mailto:malvinkristantoalim1@gmail.com" 
+                      onMouseEnter={playHoverSound}
+                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
+                    >
                       <Mail size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
                     </a>
                   </div>
@@ -336,7 +391,11 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project) => (
-                  <div key={project.id} className="bento-card group flex flex-col">
+                  <div 
+                    key={project.id} 
+                    onMouseEnter={playHoverSound}
+                    className="bento-card group flex flex-col"
+                  >
                     <div className="aspect-video overflow-hidden relative">
                       <img 
                         src={project.image_url} 
@@ -397,7 +456,11 @@ export default function App() {
                 <h3 className="text-2xl font-bold tracking-tight">Experience</h3>
                 <div className="space-y-4">
                   {bentoSkills.map((skill) => (
-                    <div key={skill.id} className="bento-card p-8 flex items-center justify-between group">
+                    <div 
+                      key={skill.id} 
+                      onMouseEnter={playHoverSound}
+                      className="bento-card p-8 flex items-center justify-between group"
+                    >
                       <div className="flex items-center gap-6">
                         <div className="w-12 h-12 rounded-xl bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors">
                           {(() => {
@@ -440,6 +503,7 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <a 
                   href="mailto:malvinkristantoalim1@gmail.com"
+                  onMouseEnter={playHoverSound}
                   className="bento-card p-8 flex flex-col justify-between group hover:bg-primary-cyan/5 transition-all duration-500"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors">
@@ -455,6 +519,7 @@ export default function App() {
                   href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onMouseEnter={playHoverSound}
                   className="bento-card p-8 flex flex-col justify-between group hover:bg-primary-cyan/5 transition-all duration-500"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors">
@@ -470,6 +535,7 @@ export default function App() {
                   href="https://github.com/MalvinKristantoAlim" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onMouseEnter={playHoverSound}
                   className="bento-card p-8 flex flex-col justify-between group hover:bg-primary-cyan/5 transition-all duration-500"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors">
@@ -485,6 +551,7 @@ export default function App() {
                   href="https://www.instagram.com/heymalvin_/" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onMouseEnter={playHoverSound}
                   className="bento-card p-8 flex flex-col justify-between group hover:bg-primary-cyan/5 transition-all duration-500"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-primary-cyan/10 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors">
@@ -522,10 +589,10 @@ export default function App() {
           </div>
         </div>
         <div className="flex gap-8 text-xs font-bold text-white/40 uppercase tracking-widest">
-          <a href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="https://github.com/MalvinKristantoAlim" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-          <a href="https://www.instagram.com/heymalvin_/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
-          <a href="mailto:malvinkristantoalim1@gmail.com" className="hover:text-white transition-colors">Email</a>
+          <a href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} className="hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://github.com/MalvinKristantoAlim" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} className="hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.instagram.com/heymalvin_/" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} className="hover:text-white transition-colors">Instagram</a>
+          <a href="mailto:malvinkristantoalim1@gmail.com" onMouseEnter={playHoverSound} className="hover:text-white transition-colors">Email</a>
         </div>
         <p className="text-[10px] text-white/20 font-medium uppercase tracking-widest">
           © 2024 Malvin Kristanto Alim
