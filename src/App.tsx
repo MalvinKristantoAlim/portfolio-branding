@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Profile, Skill, Project, BentoSkill } from "./types";
+import { profileData as staticProfile, skillsData as staticSkills, projectsData as staticProjects, bentoSkillsData as staticBento } from "./data";
 import { motion, useScroll, useSpring } from "motion/react";
 import { 
   Mail, 
@@ -124,6 +125,10 @@ export default function App() {
           fetch("/api/bento-skills")
         ]);
 
+        if (!profileRes.ok || !skillsRes.ok || !projectsRes.ok || !bentoRes.ok) {
+          throw new Error("API failed");
+        }
+
         const profileData = await profileRes.json();
         const skillsData = await skillsRes.json();
         const projectsData = await projectsRes.json();
@@ -134,7 +139,12 @@ export default function App() {
         setProjects(projectsData);
         setBentoSkills(bentoData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data, using fallback:", error);
+        // Fallback to static data for Vercel/Static deployments
+        setProfile(staticProfile);
+        setSkills(staticSkills);
+        setProjects(staticProjects);
+        setBentoSkills(staticBento);
       } finally {
         setLoading(false);
       }
