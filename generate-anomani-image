@@ -1,0 +1,46 @@
+import { GoogleGenAI } from "@google/genai";
+import fs from "fs";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+async function generate() {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  if (!apiKey) {
+    console.error("GEMINI_API_KEY or API_KEY not found");
+    process.exit(1);
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+  const model = "gemini-2.5-flash-image";
+
+  // The user provided a photo of people in a classroom/workshop.
+  // I will generate a high-quality, professional version of this scene.
+  const prompt = "A high-quality, professional photograph of a group of students and a mentor in a modern classroom or workshop setting. They are collaborating on a project, with laptops and papers on the table. The atmosphere is focused and creative. Emerald green and dark aesthetic. 16:9 aspect ratio.";
+
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: {
+        parts: [{ text: prompt }],
+      },
+      config: {
+        imageConfig: {
+          aspectRatio: "16:9",
+        },
+      },
+    });
+
+    for (const part of response.candidates[0].content.parts) {
+      if (part.inlineData) {
+        const base64Data = part.inlineData.data;
+        fs.writeFileSync("public/anomani.png", base64Data, "base64");
+        console.log("Image generated and saved to public/anomani.png");
+      }
+    }
+  } catch (error) {
+    console.error("Error generating image:", error);
+  }
+}
+
+generate();
