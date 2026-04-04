@@ -116,9 +116,6 @@
 }
 
 @layer base {
-  section[id] {
-    scroll-margin-top: 120px;
-  }
   body {
     @apply bg-black text-white antialiased selection:bg-emerald-primary selection:text-black;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
