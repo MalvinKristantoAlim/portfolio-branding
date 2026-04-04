@@ -28,7 +28,10 @@ import {
   Command,
   Binary,
   Monitor,
-  Download
+  Download,
+  Menu,
+  X,
+  MoreVertical
 } from "lucide-react";
 
 const IconMap: Record<string, any> = {
@@ -52,6 +55,7 @@ export default function App() {
   const [bentoSkills, setBentoSkills] = useState<BentoSkill[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
   const { scrollYProgress } = useScroll();
@@ -185,7 +189,7 @@ export default function App() {
       </motion.a>
 
       {/* Navigation */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4">
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 hidden md:block">
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 flex items-center gap-10 shadow-2xl">
           <button 
             onClick={() => setActiveView('home')}
@@ -225,6 +229,46 @@ export default function App() {
           </button>
         </div>
       </nav>
+
+      {/* Mobile Navigation Toggle */}
+      <div className="fixed top-6 right-6 z-[60] md:hidden">
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onMouseEnter={playHoverSound}
+          className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-emerald-primary/10 transition-all"
+        >
+          {isMenuOpen ? <X size={24} /> : <MoreVertical size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl md:hidden flex flex-col items-center justify-center p-10"
+          >
+            <div className="flex flex-col items-center gap-8">
+              {['home', 'works', 'skills', 'about', 'contact'].map((view) => (
+                <button
+                  key={view}
+                  onClick={() => {
+                    setActiveView(view);
+                    setIsMenuOpen(false);
+                  }}
+                  onMouseEnter={playHoverSound}
+                  className={`text-4xl font-black uppercase tracking-[0.2em] transition-all ${activeView === view ? 'text-emerald-primary' : 'text-white/30'}`}
+                >
+                  {view}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="max-w-6xl mx-auto px-6 pt-32 pb-20 relative z-10">
         <AnimatePresence mode="wait">
