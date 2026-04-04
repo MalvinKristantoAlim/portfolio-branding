@@ -35,7 +35,7 @@ export const projectsData: Project[] = [
     title: "Finalist - Raise Accounting Competition",
     period: "2025",
     description: "Ranked among the top finalists in a national-level accounting competition, showcasing expertise in financial analysis, auditing, and strategic planning.",
-    image_url: "/raisenomani.jpeg",
+    image_url: "/public/raisenomani.jpeg",
     tags: ["Finance", "Accounting", "Strategy"]
   },
   {
