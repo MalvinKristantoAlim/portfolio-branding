@@ -88,32 +88,8 @@ if (profileCount.count === 0) {
     "Finalist - Raise Accounting Competition",
     "2025",
     "Ranked among the top finalists in a national-level accounting competition, showcasing expertise in financial analysis, auditing, and strategic planning.",
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop",
+    "/raisenomani.jpeg",
     "Finance,Accounting,Strategy"
-  );
-
-  insertProject.run(
-    "Cyber-Physical System Prototype",
-    "2024",
-    "Engineered a prototype for a smart home system integrating IoT sensors with a real-time dashboard for energy monitoring and automated control.",
-    "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2070&auto=format&fit=crop",
-    "IoT,Dashboard,Automation"
-  );
-
-  insertProject.run(
-    "Algorithmic Trading Bot",
-    "2024",
-    "Developed a Python-based trading bot that utilizes technical analysis indicators to execute automated trades on simulated market data.",
-    "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=2070&auto=format&fit=crop",
-    "Python,Finance,Algorithms"
-  );
-
-  insertProject.run(
-    "School Management Portal",
-    "2023",
-    "Built a comprehensive portal for student tracking, grade management, and teacher-student collaboration using React and Node.js.",
-    "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132&auto=format&fit=crop",
-    "FullStack,Education,React"
   );
 
   const bento = [
