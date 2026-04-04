@@ -5,6 +5,7 @@ export interface Profile {
   hero_subtitle: string;
   about_text_1: string;
   about_text_2: string;
+  profile_image_url?: string;
 }
 
 export interface Skill {
