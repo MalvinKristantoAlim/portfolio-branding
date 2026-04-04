@@ -6,7 +6,8 @@ export const profileData: Profile = {
   hero_title: "Digital Architect & Mathematical Strategist",
   hero_subtitle: "Bridging the gap between complex mathematical theory and high-performance code implementation. Student at SMAK Frateran Surabaya.",
   about_text_1: "I am a 12th-grade student with a deep-seated passion for Optimization Mathematics and Full-Stack Web Development. My journey is defined by a relentless pursuit of solving complex, real-world problems through logical precision and creative engineering.",
-  about_text_2: "As a versatile developer and fast learner, I specialize in building scalable digital solutions. Whether it's optimizing logistics routes with linear algebra or crafting immersive user interfaces, I thrive in collaborative environments that challenge the status quo and push the boundaries of what's possible."
+  about_text_2: "As a versatile developer and fast learner, I specialize in building scalable digital solutions. Whether it's optimizing logistics routes with linear algebra or crafting immersive user interfaces, I thrive in collaborative environments that challenge the status quo and push the boundaries of what's possible.",
+  profile_image_url: "/profile.jpeg"
 };
 
 export const skillsData: Skill[] = [
@@ -24,7 +25,7 @@ export const projectsData: Project[] = [
   {
     id: 1,
     title: "ANOMANI: Logistics Optimization",
-    period: "2025",
+    period: "2023 - 2025",
     description: "Led a cross-functional team to develop a mathematical modeling engine for logistics route optimization. Reduced operational costs by 15% through advanced linear programming.",
     image_url: "/anomanfoto.jpeg",
     tags: ["Mathematics", "Optimization", "Logistics"]
