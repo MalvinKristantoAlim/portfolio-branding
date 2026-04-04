@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Profile, Skill, Project, BentoSkill } from "./types";
 import { profileData as staticProfile, skillsData as staticSkills, projectsData as staticProjects, bentoSkillsData as staticBento } from "./data";
-import { motion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import { 
   Mail, 
   Github, 
@@ -51,7 +51,7 @@ export default function App() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [bentoSkills, setBentoSkills] = useState<BentoSkill[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeView, setActiveView] = useState('home');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
   const { scrollYProgress } = useScroll();
@@ -60,13 +60,6 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   // Sound effect for mechanical keyboard "thock"
   const playHoverSound = () => {
@@ -81,30 +74,6 @@ export default function App() {
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: 0
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach(section => observer.observe(section));
-
-    return () => {
-      sections.forEach(section => observer.unobserve(section));
-    };
   }, []);
 
   useEffect(() => {
@@ -215,47 +184,57 @@ export default function App() {
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4">
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 flex items-center gap-10 shadow-2xl">
           <button 
-            onClick={() => scrollToSection('home')}
+            onClick={() => setActiveView('home')}
             onMouseEnter={playHoverSound}
-            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeSection === 'home' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
+            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeView === 'home' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
           >
             Home
           </button>
           <button 
-            onClick={() => scrollToSection('works')}
+            onClick={() => setActiveView('works')}
             onMouseEnter={playHoverSound}
-            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeSection === 'works' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
+            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeView === 'works' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
           >
             Works
           </button>
           <button 
-            onClick={() => scrollToSection('skills')}
+            onClick={() => setActiveView('skills')}
             onMouseEnter={playHoverSound}
-            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeSection === 'skills' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
+            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeView === 'skills' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
           >
             Skills
           </button>
           <button 
-            onClick={() => scrollToSection('about')}
+            onClick={() => setActiveView('about')}
             onMouseEnter={playHoverSound}
-            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeSection === 'about' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
+            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeView === 'about' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
           >
             About
           </button>
           <div className="w-px h-4 bg-white/10"></div>
           <button 
-            onClick={() => scrollToSection('contact')}
+            onClick={() => setActiveView('contact')}
             onMouseEnter={playHoverSound}
-            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeSection === 'contact' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
+            className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all ${activeView === 'contact' ? 'text-emerald-primary' : 'text-white/30 hover:text-emerald-primary'}`}
           >
             Contact
           </button>
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 pt-32 pb-20 space-y-40">
-        {/* Home Section */}
-        <section id="home" className="space-y-6">
+      <main className="max-w-6xl mx-auto px-6 pt-32 pb-20 relative z-10">
+        <AnimatePresence mode="wait">
+          {activeView === 'home' && (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-32"
+            >
+              {/* Home Section */}
+              <section id="home" className="space-y-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +310,7 @@ export default function App() {
                   className="bento-card group overflow-hidden relative"
                 >
                   <img 
-                    src="https://lh3.googleusercontent.com/aida/ADBb0uiMggPnN9uuSmRMw__1uov0mQp9SJKx76Y_L3vSH3v6ce4r9XTd-SvmhrvcWs_uuZ4IFcaQnRXLJ98DfAa700LFvaCpS5uOB3CofrZU5JHUC6MeYMbHwKZ1zP6_rd0Sp-fR3qXDsdzH73mAZHC7USyL5yYr8EoVB1RGvvp6AxeF8U-YsSV2sKH_u4iuBVX5TSNU1AtFGj6QMMmSBzbuCtWY4oYxb6gvfCICghtrpd_6n_-21YJYvw8DvgYA-SApnWm2C37UVwtxCY4" 
+                    src={profile?.profile_image_url || "/profile.jpeg"} 
                     alt="Profile"
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
                     referrerPolicy="no-referrer"
@@ -345,7 +324,7 @@ export default function App() {
 
                 {/* About Card */}
                 <div 
-                  onClick={() => scrollToSection('about')}
+                  onClick={() => setActiveView('about')}
                   onMouseEnter={playHoverSound}
                   className="md:col-span-2 bento-card p-12 flex flex-col justify-between group cursor-pointer hover:bg-emerald-primary/5 transition-all duration-700"
                 >
@@ -365,7 +344,7 @@ export default function App() {
 
                 {/* Location Card */}
                 <div 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => setActiveView('contact')}
                   onMouseEnter={playHoverSound}
                   className="bento-card p-12 flex flex-col justify-between group cursor-pointer hover:bg-emerald-primary/5 transition-all duration-700"
                 >
@@ -517,7 +496,7 @@ export default function App() {
                 {/* Featured Project Card */}
                 {projects[0] && (
                   <div 
-                    onClick={() => scrollToSection('works')}
+                    onClick={() => setActiveView('works')}
                     onMouseEnter={playHoverSound}
                     className="md:col-span-2 md:row-span-2 bento-card group cursor-pointer overflow-hidden"
                   >
@@ -568,7 +547,7 @@ export default function App() {
 
                 {/* Social Connect Card */}
                 <div 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => setActiveView('contact')}
                   onMouseEnter={playHoverSound}
                   className="md:col-span-2 bento-card p-8 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-all"
                 >
@@ -624,9 +603,19 @@ export default function App() {
               </div>
             </motion.div>
           </section>
+        </motion.div>
+      )}
 
-            {/* Works Section */}
-            <section id="works" className="space-y-16">
+          {activeView === 'works' && (
+            <motion.div
+              key="works"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Works Section */}
+              <section id="works" className="space-y-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -698,9 +687,19 @@ export default function App() {
               </div>
             </motion.div>
           </section>
+        </motion.div>
+      )}
 
-          {/* Skills Section */}
-          <section id="skills" className="space-y-20">
+          {activeView === 'skills' && (
+            <motion.div
+              key="skills"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Skills Section */}
+              <section id="skills" className="space-y-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -778,59 +777,69 @@ export default function App() {
               </div>
             </motion.div>
           </section>
+        </motion.div>
+      )}
 
-          {/* About Section */}
-          <section id="about" className="space-y-32">
+          {activeView === 'about' && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-              className="max-w-6xl mx-auto space-y-32"
+              key="about"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-                <div className="space-y-12">
-                  <div className="space-y-6">
-                    <h2 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] emerald-text-gradient">
-                      The <span className="text-white">Story</span>
-                    </h2>
-                    <p className="text-3xl text-emerald-primary font-light italic tracking-tight">
-                      Architecting logic, one line at a time.
-                    </p>
-                  </div>
-                  <div className="space-y-10 text-2xl text-white/30 leading-relaxed font-light italic">
-                    <p>{profile?.about_text_1}</p>
-                    <p>{profile?.about_text_2}</p>
-                  </div>
-                  <div className="flex gap-16 pt-8">
-                    <div>
-                      <p className="text-6xl font-black text-white tracking-tighter">12th</p>
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Grade Student</p>
+              {/* About Section */}
+              <section id="about" className="space-y-32">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                  className="max-w-6xl mx-auto space-y-32"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+                    <div className="space-y-12">
+                      <div className="space-y-6">
+                        <h2 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] emerald-text-gradient">
+                          The <span className="text-white">Story</span>
+                        </h2>
+                        <p className="text-3xl text-emerald-primary font-light italic tracking-tight">
+                          Architecting logic, one line at a time.
+                        </p>
+                      </div>
+                      <div className="space-y-10 text-2xl text-white/30 leading-relaxed font-light italic">
+                        <p>{profile?.about_text_1}</p>
+                        <p>{profile?.about_text_2}</p>
+                      </div>
+                      <div className="flex gap-16 pt-8">
+                        <div>
+                          <p className="text-6xl font-black text-white tracking-tighter">12th</p>
+                          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Grade Student</p>
+                        </div>
+                        <div>
+                          <p className="text-6xl font-black text-white tracking-tighter">15+</p>
+                          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Projects</p>
+                        </div>
+                        <div>
+                          <p className="text-6xl font-black text-white tracking-tighter">5+</p>
+                          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Languages</p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-6xl font-black text-white tracking-tighter">15+</p>
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Projects</p>
-                    </div>
-                    <div>
-                      <p className="text-6xl font-black text-white tracking-tighter">5+</p>
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Languages</p>
+                    <div className="relative">
+                      <div className="aspect-[4/5] rounded-[4rem] overflow-hidden border border-white/10 relative z-10 group shadow-2xl shadow-emerald-primary/10">
+                        <img 
+                          src={profile?.profile_image_url || "/profile.jpeg"} 
+                          alt="About"
+                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                      </div>
+                      <div className="absolute -top-20 -right-20 w-80 h-80 bg-emerald-primary/10 rounded-full blur-[120px] animate-pulse-glow"></div>
+                      <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-emerald-primary/5 rounded-full blur-[150px] animate-blob"></div>
                     </div>
                   </div>
-                </div>
-                <div className="relative">
-                  <div className="aspect-[4/5] rounded-[4rem] overflow-hidden border border-white/10 relative z-10 group shadow-2xl shadow-emerald-primary/10">
-                    <img 
-                      src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" 
-                      alt="About"
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-                  </div>
-                  <div className="absolute -top-20 -right-20 w-80 h-80 bg-emerald-primary/10 rounded-full blur-[120px] animate-pulse-glow"></div>
-                  <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-emerald-primary/5 rounded-full blur-[150px] animate-blob"></div>
-                </div>
-              </div>
 
               {/* Values Section */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -852,16 +861,26 @@ export default function App() {
               </div>
             </motion.div>
           </section>
+        </motion.div>
+      )}
 
-          {/* Contact Section */}
-          <section id="contact" className="space-y-24">
+          {activeView === 'contact' && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-              className="max-w-4xl mx-auto space-y-24"
+              key="contact"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
             >
+              {/* Contact Section */}
+              <section id="contact" className="space-y-24">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                  className="max-w-4xl mx-auto space-y-24"
+                >
               <div className="space-y-8 text-center">
                 <h2 className="text-6xl md:text-9xl font-black tracking-tighter leading-none emerald-text-gradient">
                   Get in <span className="text-white">Touch</span>
@@ -909,8 +928,11 @@ export default function App() {
                   </div>
                 </div>
               </div>
+                </motion.div>
+              </section>
             </motion.div>
-          </section>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Footer */}
