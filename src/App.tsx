@@ -62,6 +62,10 @@ export default function App() {
   });
 
   // Sound effect for mechanical keyboard "thock"
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeView]);
+
   const playHoverSound = () => {
     const audio = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_78390a3221.mp3");
     audio.volume = 0.2;
@@ -235,374 +239,135 @@ export default function App() {
             >
               {/* Home Section */}
               <section id="home" className="space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="space-y-6"
-          >
-            {/* Hero & Bento Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {/* Intro Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-3 bento-card p-10 md:p-20 flex flex-col justify-center space-y-10 relative overflow-hidden group"
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                  className="space-y-6"
                 >
-                  <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-30 transition-all duration-700 group-hover:rotate-12">
-                    <Sparkles size={160} className="text-emerald-primary animate-pulse-glow" />
-                  </div>
-                  <div className="status-badge w-fit">
-                    <span className="w-2 h-2 bg-emerald-primary rounded-full animate-pulse shadow-[0_0_15px_#00ff88]"></span>
-                    Open for high-end collaborations
-                  </div>
-                  <div className="space-y-6 relative z-10">
-                    <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] emerald-text-gradient relative">
-                      <motion.span
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                      >
-                        {profile?.name.split(' ')[0] || "Malvin"}
-                      </motion.span>
-                      <br />
-                      <motion.span
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-white/10"
-                      >
-                        {profile?.name.split(' ')[1] || "Kristanto"}
-                      </motion.span>
-                    </h1>
-                    <p className="text-3xl md:text-4xl text-white font-light tracking-tight max-w-3xl leading-tight">
-                      {profile?.hero_title || "Digital Architect & Mathematical Strategist"}
-                    </p>
-                    <p className="text-xl md:text-2xl text-white/30 font-medium leading-relaxed max-w-2xl italic serif">
-                      "{profile?.hero_subtitle}"
-                    </p>
-                  </div>
-                  <div className="pt-8 flex flex-wrap gap-6 relative z-10">
-                    <a 
-                      href="https://wa.me/6288226664102"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {/* Hero & Bento Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {/* Intro Card */}
+                    <div 
                       onMouseEnter={playHoverSound}
-                      className="btn-emerald flex items-center gap-4"
+                      className="md:col-span-3 bento-card p-10 md:p-20 flex flex-col justify-center space-y-10 relative overflow-hidden group"
                     >
-                      Start a Project
-                      <MessageCircle size={24} />
-                    </a>
-                    <a 
-                      href="/resume.pdf"
-                      download
-                      onMouseEnter={playHoverSound}
-                      className="px-10 py-5 bg-white/5 border border-white/10 text-white font-black rounded-2xl hover:bg-white/10 hover:scale-105 active:scale-95 transition-all uppercase tracking-widest text-sm flex items-center gap-3"
-                    >
-                      Resume <Download size={18} />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Profile Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="bento-card group overflow-hidden relative"
-                >
-                  <img 
-                    src={profile?.profile_image_url || "/profile.jpeg"} 
-                    alt="Profile"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-                  <div className="absolute bottom-6 left-6">
-                    <p className="text-[10px] font-bold text-emerald-primary uppercase tracking-[0.3em]">Location</p>
-                    <p className="text-sm font-black uppercase tracking-tight">Surabaya, ID</p>
-                  </div>
-                </div>
-
-                {/* About Card */}
-                <div 
-                  onClick={() => setActiveView('about')}
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-2 bento-card p-12 flex flex-col justify-between group cursor-pointer hover:bg-emerald-primary/5 transition-all duration-700"
-                >
-                  <div className="space-y-6">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-emerald-primary/10 transition-all duration-500">
-                      <Users className="text-white/20 group-hover:text-emerald-primary" size={24} />
-                    </div>
-                    <h3 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">The Architect</h3>
-                    <p className="text-2xl text-white/80 leading-relaxed line-clamp-3 font-light italic">
-                      {profile?.about_text_1}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4 text-emerald-primary font-black text-[10px] uppercase tracking-[0.2em] group-hover:gap-6 transition-all duration-500">
-                    Explore Story <ChevronRight size={14} />
-                  </div>
-                </div>
-
-                {/* Location Card */}
-                <div 
-                  onClick={() => setActiveView('contact')}
-                  onMouseEnter={playHoverSound}
-                  className="bento-card p-12 flex flex-col justify-between group cursor-pointer hover:bg-emerald-primary/5 transition-all duration-700"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-primary/10 flex items-center justify-center group-hover:bg-emerald-primary/20 transition-all duration-500">
-                      <MapPin className="text-emerald-primary" size={24} />
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Timezone</p>
-                      <p className="text-sm font-black text-emerald-primary uppercase tracking-tight">GMT+7</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Current Status</p>
-                    <p className="text-2xl font-black tracking-tighter uppercase leading-none">Available <br/> Globally</p>
-                  </div>
-                </div>
-
-                {/* Tech Stack Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="bento-card p-8 flex flex-col justify-between group"
-                >
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-white/40 text-sm font-bold uppercase tracking-widest">Tech Stack</h3>
-                    <Monitor size={16} className="text-white/20 group-hover:text-emerald-primary transition-colors" />
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {skills.slice(0, 6).map((skill) => {
-                      const Icon = IconMap[skill.icon] || Code2;
-                      return (
-                        <div 
-                          key={skill.id} 
-                          onMouseEnter={(e) => { e.stopPropagation(); playHoverSound(); }}
-                          className="w-full aspect-square rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors group/icon"
+                      <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-30 transition-all duration-700 group-hover:rotate-12">
+                        <Sparkles size={160} className="text-emerald-primary animate-pulse-glow" />
+                      </div>
+                      <div className="status-badge w-fit">
+                        <span className="w-2 h-2 bg-emerald-primary rounded-full animate-pulse shadow-[0_0_15px_#00ff88]"></span>
+                        Open for high-end collaborations
+                      </div>
+                      <div className="space-y-6 relative z-10">
+                        <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] emerald-text-gradient relative">
+                          <motion.span
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                          >
+                            {profile?.name.split(' ')[0] || "Malvin"}
+                          </motion.span>
+                          <br />
+                          <motion.span
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                            className="text-white/10"
+                          >
+                            {profile?.name.split(' ')[1] || "Kristanto"}
+                          </motion.span>
+                        </h1>
+                        <p className="text-3xl md:text-4xl text-white font-light tracking-tight max-w-3xl leading-tight">
+                          {profile?.hero_title || "Digital Architect & Mathematical Strategist"}
+                        </p>
+                      </div>
+                      <div className="pt-8 flex flex-wrap gap-6 relative z-10">
+                        <button 
+                          onClick={() => setActiveView('contact')}
+                          onMouseEnter={playHoverSound}
+                          className="btn-emerald flex items-center gap-4"
                         >
-                          <Icon size={20} className="text-white/40 group-hover/icon:text-emerald-primary transition-colors" />
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Current Focus Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="bento-card p-8 flex flex-col justify-between group bg-gradient-to-br from-emerald-primary/5 to-transparent"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-primary/10 flex items-center justify-center">
-                      <Activity size={20} className="text-emerald-primary animate-pulse" />
+                          Start a Project
+                          <MessageCircle size={24} />
+                        </button>
+                        <a 
+                          href="/resume.pdf"
+                          download
+                          onMouseEnter={playHoverSound}
+                          className="px-10 py-5 bg-white/5 border border-white/10 text-white font-black rounded-2xl hover:bg-white/10 hover:scale-105 active:scale-95 transition-all uppercase tracking-widest text-sm flex items-center gap-3"
+                        >
+                          Resume <Download size={18} />
+                        </a>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Status</p>
-                      <p className="text-xs font-black text-emerald-primary uppercase">Active</p>
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Current Focus</p>
-                    <p className="text-lg font-black tracking-tight leading-tight">Optimizing Logistics Algorithms</p>
-                  </div>
-                </div>
 
-                {/* Code Snippet Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-2 bento-card p-8 flex flex-col justify-between group overflow-hidden"
-                >
-                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <Binary size={120} />
-                  </div>
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
-                      <div className="w-2 h-2 rounded-full bg-yellow-500/50"></div>
-                      <div className="w-2 h-2 rounded-full bg-green-500/50"></div>
-                      <span className="ml-2 text-[10px] font-mono text-white/20">optimization.py</span>
-                    </div>
-                    <pre className="font-mono text-[10px] md:text-xs text-white/40 leading-relaxed">
-                      <code>{`def optimize_route(nodes, constraints):
-    # Linear Programming Engine
-    prob = LpProblem("Logistics", LpMinimize)
-    prob += lpSum([costs[i] * vars[i] for i in range(n)])
-    
-    # Apply Mathematical Constraints
-    for c in constraints:
-        prob += lpSum(c.weights * vars) <= c.limit
-        
-    return prob.solve()`}</code>
-                    </pre>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px] font-black text-emerald-primary uppercase tracking-widest pt-4">
-                    <Terminal size={12} /> Mathematical Precision
-                  </div>
-                </div>
-
-                {/* GitHub Activity Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-2 bento-card p-8 flex flex-col justify-between group"
-                >
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-white/40 text-sm font-bold uppercase tracking-widest">GitHub Activity</h3>
-                    <Github size={16} className="text-white/20 group-hover:text-emerald-primary transition-colors" />
-                  </div>
-                  <div className="flex gap-1 h-12 items-end">
-                    {Array.from({ length: 40 }).map((_, i) => (
-                      <motion.div 
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${Math.random() * 100}%` }}
-                        transition={{ duration: 1, delay: i * 0.02, repeat: Infinity, repeatType: "reverse" }}
-                        className={`flex-1 rounded-t-sm ${Math.random() > 0.5 ? 'bg-emerald-primary/40' : 'bg-emerald-primary/10'}`}
+                    {/* Profile Card */}
+                    <div 
+                      onMouseEnter={playHoverSound}
+                      className="bento-card group overflow-hidden relative"
+                    >
+                      <img 
+                        src={profile?.profile_image_url || "/profile.jpeg"} 
+                        alt="Profile"
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                        referrerPolicy="no-referrer"
                       />
-                    ))}
-                  </div>
-                  <div className="flex justify-between items-center pt-4">
-                    <p className="text-[10px] font-black text-white/20 uppercase tracking-widest">365 Days of Code</p>
-                    <p className="text-[10px] font-black text-emerald-primary uppercase tracking-widest">1,240 Contributions</p>
-                  </div>
-                </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                      <div className="absolute bottom-6 left-6">
+                        <p className="text-[10px] font-bold text-emerald-primary uppercase tracking-[0.3em]">Location</p>
+                        <p className="text-sm font-black uppercase tracking-tight">Surabaya, ID</p>
+                      </div>
+                    </div>
 
-                {/* Tech Orbit Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="bento-card p-8 flex flex-col justify-center items-center group overflow-hidden relative"
-                >
-                  <div className="absolute inset-0 bg-emerald-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 border border-emerald-primary/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                    <div className="absolute inset-4 border border-emerald-primary/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Cpu size={32} className="text-emerald-primary animate-pulse" />
-                    </div>
-                    {/* Orbiting Icons */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-black border border-emerald-primary/30 rounded-lg flex items-center justify-center animate-[spin_20s_linear_infinite] origin-[50%_64px]">
-                      <Code2 size={12} className="text-emerald-primary" />
-                    </div>
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-6 h-6 bg-black border border-emerald-primary/30 rounded-lg flex items-center justify-center animate-[spin_25s_linear_infinite_reverse] origin-[50%_-32px]">
-                      <Database size={12} className="text-emerald-primary" />
-                    </div>
-                  </div>
-                  <div className="mt-6 text-center">
-                    <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">System Architecture</p>
-                    <p className="text-xs font-black text-emerald-primary uppercase">Optimized</p>
-                  </div>
-                </div>
-
-                {/* Featured Project Card */}
-                {projects[0] && (
-                  <div 
-                    onClick={() => setActiveView('works')}
-                    onMouseEnter={playHoverSound}
-                    className="md:col-span-2 md:row-span-2 bento-card group cursor-pointer overflow-hidden"
-                  >
-                    <img 
-                      src={projects[0].image_url} 
-                      alt={projects[0].title}
-                      className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80"></div>
-                    <div className="absolute bottom-0 left-0 p-8 space-y-2">
-                      <span className="text-[10px] font-bold text-primary-cyan uppercase tracking-widest">{projects[0].period}</span>
-                      <h4 className="text-2xl font-bold tracking-tight">{projects[0].title}</h4>
-                      <p className="text-sm text-white/60 line-clamp-2 max-w-xs">{projects[0].description}</p>
-                    </div>
-                    <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ArrowUpRight size={20} />
-                    </div>
-                  </div>
-                )}
-
-                {/* Capabilities Card */}
-                <div 
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-2 bento-card p-8 flex flex-col justify-between"
-                >
-                  <div className="space-y-4">
-                    <h3 className="text-white/40 text-sm font-bold uppercase tracking-widest">Capabilities</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {skills.map(s => (
-                        <span key={s.id} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-wider text-white/60">
-                          {s.title}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 pt-4">
-                    <div className="flex -space-x-2">
-                      {[1,2,3].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-white/10 flex items-center justify-center overflow-hidden">
-                          <img src={`https://picsum.photos/seed/${i}/100/100`} alt="user" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                    {/* Current Focus Card */}
+                    <div 
+                      onMouseEnter={playHoverSound}
+                      className="md:col-span-2 bento-card p-12 flex flex-col justify-between group bg-gradient-to-br from-emerald-primary/5 to-transparent"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="w-12 h-12 rounded-2xl bg-emerald-primary/10 flex items-center justify-center">
+                          <Activity size={28} className="text-emerald-primary animate-pulse" />
                         </div>
-                      ))}
+                        <div className="text-right">
+                          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Status</p>
+                          <p className="text-sm font-black text-emerald-primary uppercase">Active</p>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Current Focus</p>
+                        <p className="text-3xl font-black tracking-tight leading-tight">Optimizing Logistics Algorithms & High-Performance Web Architecture</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-white/40 font-medium">Trusted by global clients</p>
-                  </div>
-                </div>
 
-                {/* Social Connect Card */}
-                <div 
-                  onClick={() => setActiveView('contact')}
-                  onMouseEnter={playHoverSound}
-                  className="md:col-span-2 bento-card p-8 flex items-center justify-between group cursor-pointer hover:bg-white/5 transition-all"
-                >
-                  <div className="space-y-1">
-                    <h3 className="text-xl font-bold tracking-tight group-hover:text-primary-cyan transition-colors">Let's connect</h3>
-                    <p className="text-sm text-white/40">Find me on social media</p>
+                    {/* Featured Project Card */}
+                    {projects[0] && (
+                      <div 
+                        onClick={() => setActiveView('works')}
+                        onMouseEnter={playHoverSound}
+                        className="md:col-span-2 bento-card group cursor-pointer overflow-hidden relative min-h-[300px]"
+                      >
+                        <img 
+                          src={projects[0].image_url} 
+                          alt={projects[0].title}
+                          className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80"></div>
+                        <div className="absolute bottom-0 left-0 p-10 space-y-3">
+                          <span className="text-[10px] font-bold text-emerald-primary uppercase tracking-widest">{projects[0].period}</span>
+                          <h4 className="text-3xl font-bold tracking-tight">{projects[0].title}</h4>
+                          <p className="text-base text-white/60 line-clamp-2 max-w-md italic font-light">"{projects[0].description}"</p>
+                        </div>
+                        <div className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ArrowUpRight size={24} />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
-                    <a 
-                      href="https://github.com/MalvinKristantoAlim" 
-                      target="_blank" 
-                      onMouseEnter={playHoverSound}
-                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
-                    >
-                      <Github size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
-                    </a>
-                    <a 
-                      href="https://www.linkedin.com/in/malvin-k-a-ba3031383/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onMouseEnter={playHoverSound}
-                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
-                    >
-                      <Linkedin size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
-                    </a>
-                    <a 
-                      href="https://www.instagram.com/heymalvin_/" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onMouseEnter={playHoverSound}
-                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
-                    >
-                      <Instagram size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
-                    </a>
-                    <a 
-                      href="https://wa.me/6288226664102" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onMouseEnter={playHoverSound}
-                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
-                    >
-                      <MessageCircle size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
-                    </a>
-                    <a 
-                      href="mailto:malvinkristantoalim1@gmail.com" 
-                      onMouseEnter={playHoverSound}
-                      className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-primary-cyan/20 transition-colors group/icon"
-                    >
-                      <Mail size={20} className="text-white/40 group-hover/icon:text-primary-cyan transition-colors" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </section>
+                </motion.div>
+              </section>
         </motion.div>
       )}
 
